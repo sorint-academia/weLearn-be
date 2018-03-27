@@ -27,9 +27,7 @@ public class ProgressController {
 	@GetMapping("/progresses/{progressID}")
 	public ProgressFE getProgresses(@PathVariable("progressID") UUID progressID) {
 		return null;
-	}	private String progressProjectID;
-	private String projectID;
-	private int version;
+	}
 	
 	@GetMapping("/progresses/{progressID}/projects")
 	public List<ProgressProjectFE> getProgressProjects(@PathVariable("progressID") UUID progressID) {
