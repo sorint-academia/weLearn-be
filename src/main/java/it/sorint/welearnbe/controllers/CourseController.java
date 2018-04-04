@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.sorint.welearnbe.controllers.entity.CourseFE;
-import it.sorint.welearnbe.controllers.entity.CourseIDFE;
 import it.sorint.welearnbe.controllers.entity.CourseWithUnitsFE;
 import it.sorint.welearnbe.controllers.entity.UnitFE;
 import it.sorint.welearnbe.controllers.entity.UnitWithWidgetsFE;
