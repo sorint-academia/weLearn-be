@@ -1,5 +1,6 @@
 package it.sorint.welearnbe.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,22 +25,22 @@ public class CourseController {
 	}
 	
 	@GetMapping("/courses/{courseID}")
-	public CourseWithUnitsFE getCourse(@PathVariable("courseID") UUID courseID) {
+	public CourseWithUnitsFE getCourse(Principal principal, @PathVariable("courseID") UUID courseID) {
 		return null;
 	}
 	
 	@GetMapping("/courses/{courseID}/units")
-	public List<UnitFE> getUnits(@PathVariable("courseID") UUID courseID) {
+	public List<UnitFE> getUnits(Principal principal, @PathVariable("courseID") UUID courseID) {
 		return null;
 	}
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}")
-	public UnitWithWidgetsFE getUnit(@PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
+	public UnitWithWidgetsFE getUnit(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
 		return null;
 	}
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}/widgets")
-	public List<WidgetFE> getWidget(@PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
+	public List<WidgetFE> getWidget(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
 		return null;
 	}
 }

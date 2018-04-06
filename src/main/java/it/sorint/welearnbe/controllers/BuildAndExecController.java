@@ -2,6 +2,7 @@ package it.sorint.welearnbe.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
@@ -20,28 +21,28 @@ import it.sorint.welearnbe.controllers.entity.BuildResultFE;
 public class BuildAndExecController {
 
 	@PostMapping("/progresses/{progressID}/projects/{projectID}/build")
-	public BuildResultFE buildProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	public BuildResultFE buildProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/progresses/{progressID}/projects/{projectID}/exec")
-	public ResponseEntity execProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	public ResponseEntity execProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
 	@GetMapping("/progresses/{progressID}/projects/{projectID}/stdout")
-	public Byte[] stdoutProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	public Byte[] stdoutProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
 	@GetMapping("/progresses/{progressID}/projects/{projectID}/stderr")
-	public Byte[] stderrProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	public Byte[] stderrProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
 	@PutMapping("/progresses/{progressID}/projects/{projectID}/stdin")
-	public Byte[] writeStdinProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, InputStream stream) throws IOException {
+	public Byte[] writeStdinProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, InputStream stream) throws IOException {
 		//Get stream content
 		byte[] content = IOUtils.toByteArray(stream);
 		

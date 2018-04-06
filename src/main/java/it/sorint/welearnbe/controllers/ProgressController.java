@@ -1,5 +1,6 @@
 package it.sorint.welearnbe.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,22 +26,22 @@ public class ProgressController {
 	}
 	
 	@GetMapping("/progresses/{progressID}")
-	public ProgressFE getProgresses(@PathVariable("progressID") UUID progressID) {
+	public ProgressFE getProgresses(Principal principal, @PathVariable("progressID") UUID progressID) {
 		return null;
 	}
 	
 	@GetMapping("/progresses/{progressID}/projects")
-	public List<ProgressProjectFE> getProgressProjects(@PathVariable("progressID") UUID progressID) {
+	public List<ProgressProjectFE> getProgressProjects(Principal principal, @PathVariable("progressID") UUID progressID) {
 		return null;
 	}
 	
 	@GetMapping("/progresses/{progressID}/projects/{projectID}")
-	public ProgressProjectWithFilenamesFE getProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	public ProgressProjectWithFilenamesFE getProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
 		return null;
 	}
 	
 	@GetMapping("/progresses/{progressID}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
-	public Byte[] getProgressProject(@PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
+	public Byte[] getProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
