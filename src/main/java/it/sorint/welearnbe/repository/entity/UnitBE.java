@@ -33,5 +33,4 @@ public class UnitBE {
 	public void setWidgets(List<WidgetBE> widgets) {
 		this.widgets = widgets;
 	}
-	
 }
