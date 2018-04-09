@@ -3,6 +3,7 @@ package it.sorint.welearnbe.controllers;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.websocket.Session;
 
@@ -19,6 +20,8 @@ import it.sorint.welearnbe.controllers.entity.CourseWithUnitsFE;
 import it.sorint.welearnbe.controllers.entity.UnitFE;
 import it.sorint.welearnbe.controllers.entity.UnitWithWidgetsFE;
 import it.sorint.welearnbe.controllers.entity.WidgetFE;
+import it.sorint.welearnbe.converter.CourseConverter;
+import it.sorint.welearnbe.services.CourseService;
 import it.sorint.welearnbe.services.SessionService;
 
 @RestController
@@ -27,10 +30,15 @@ public class CourseController {
 
 	@Autowired
 	private SessionService sessionService;
+	@Autowired
+	private CourseService courseService;
 	
 	@GetMapping("/courses")
-	public ResponseEntity<List<CourseFE>> getCourses() {
-		return null;
+	public ResponseEntity<List<CourseFE>> getCourses(Principal principal) {
+		return ResponseEntity.ok(
+				courseService.getCourses(principal.getName()).stream()
+					.map(be -> CourseConverter.convertToCourseFE(be))
+					.collect(Collectors.toList()));
 	}
 	
 	@GetMapping("/courses/{courseID}")
