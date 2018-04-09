@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ProgressUnitBE {
+	UUID courseId;
 	UUID id;
 	Boolean completed;
 	List<ProgressWidgetBE> widgets;
@@ -25,5 +26,11 @@ public class ProgressUnitBE {
 	}
 	public void setWidgets(List<ProgressWidgetBE> widgets) {
 		this.widgets = widgets;
+	}
+	public UUID getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(UUID courseId) {
+		this.courseId = courseId;
 	}
 }
