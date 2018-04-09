@@ -1,5 +1,9 @@
 package it.sorint.welearnbe.repository;
 
-public interface SessionRepository {
+import java.util.UUID;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import it.sorint.welearnbe.repository.entity.SessionBE;
+
+public interface SessionRepository extends MongoRepository<SessionBE, UUID>{
 
 }
