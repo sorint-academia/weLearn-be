@@ -3,8 +3,6 @@ package it.sorint.welearnbe.converter;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
-
 import it.sorint.welearnbe.controllers.entity.CourseFE;
 import it.sorint.welearnbe.controllers.entity.CourseWithUnitsFE;
 import it.sorint.welearnbe.controllers.entity.UnitFE;
@@ -26,7 +24,7 @@ public class CourseConverter {
 	}
 	
 	public static CourseWithUnitsFE convertToCourseWithUnitsFE(CourseBE backend) {
-		CourseWithUnitsFE frontend = new CourseFE();
+		CourseWithUnitsFE frontend = new CourseWithUnitsFE();
 		frontend.setAuthor(backend.getAuthor());
 		frontend.setCourseID("/api/courses/" + backend.getId());
 		frontend.setDescription(backend.getDescription());
@@ -39,12 +37,12 @@ public class CourseConverter {
 		UnitFE frontend = new UnitFE();
 		frontend.setDescription(backend.getDescription());
 		frontend.setTitle(backend.getTitle());
-		frontend.setUnitID("/api/courses/" + courseID + "/units/" + backend.getId()00);
+		frontend.setUnitID("/api/courses/" + courseID + "/units/" + backend.getId());
 		return frontend;
 	}
 	
 	public static UnitWithWidgetsFE convertToUnitWithWidgetsFE(UnitBE backend, UUID courseID) {
-		UnitWithWidgetsFE frontend = new UnitFE();
+		UnitWithWidgetsFE frontend = new UnitWithWidgetsFE();
 		frontend.setDescription(backend.getDescription());
 		frontend.setTitle(backend.getTitle());
 		frontend.setUnitID("/api/courses/" + courseID + "/units/" + backend.getId());

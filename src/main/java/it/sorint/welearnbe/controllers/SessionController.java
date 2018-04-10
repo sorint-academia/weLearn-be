@@ -29,7 +29,7 @@ public class SessionController {
 	
 	@GetMapping("/sessions/?asStudent")
 	public ResponseEntity<List<SessionFE>> getSessionsAsStudent(Principal principal) {
-		
+		return null;
 	}
 	
 	@GetMapping("/sessions/?asTeacher")
