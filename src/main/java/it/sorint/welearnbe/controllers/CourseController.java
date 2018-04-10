@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.websocket.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +41,7 @@ public class CourseController {
 	
 	@GetMapping("/courses/{courseID}")
 	public ResponseEntity<CourseWithUnitsFE> getCourse(Principal principal, @PathVariable("courseID") UUID courseID) {
-		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOf(principal.getName(), courseID)) {
+		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
@@ -53,7 +51,7 @@ public class CourseController {
 	
 	@GetMapping("/courses/{courseID}/units")
 	public ResponseEntity<List<UnitFE>> getUnits(Principal principal, @PathVariable("courseID") UUID courseID) {
-		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOf(principal.getName(), courseID)) {
+		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
@@ -63,7 +61,7 @@ public class CourseController {
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}")
 	public ResponseEntity<UnitWithWidgetsFE> getUnit(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
-		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOf(principal.getName(), courseID)) {
+		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
@@ -73,7 +71,7 @@ public class CourseController {
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}/widgets")
 	public ResponseEntity<List<WidgetFE>> getWidget(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
-		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOf(principal.getName(), courseID)) {
+		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
