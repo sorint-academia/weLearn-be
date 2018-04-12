@@ -1,9 +1,15 @@
 package it.sorint.welearnbe.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import it.sorint.welearnbe.converter.CourseConverter;
+import it.sorint.welearnbe.converter.SessionConverter;
+import it.sorint.welearnbe.repository.entity.SessionBE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +27,30 @@ public class SessionController {
 
 	@Autowired
 	private SessionService sessionService;
+
 	
 	@GetMapping("/sessions")
 	public ResponseEntity<List<SessionFE>> getSessions(Principal principal) {
-		return null;
+	    System.out.println("You shouldn't be there!");  //sys.out temporaneo per verificare il corretto funzionamento di getSessionsAsStudent/Teacher
+	    return null;
 	}
 	
-	@GetMapping("/sessions/?asStudent")
+	@GetMapping("/sessions/asStudent")
 	public ResponseEntity<List<SessionFE>> getSessionsAsStudent(Principal principal) {
-		return null;
+        return ResponseEntity.ok(
+                sessionService.getSessionsAsStudent(principal.getName()).stream()
+                        .map(SessionConverter::convertToSessionFE)
+                .collect(Collectors.toList())
+        );
 	}
 	
-	@GetMapping("/sessions/?asTeacher")
+	@GetMapping("/sessions/asTeacher")
 	public ResponseEntity<List<SessionFE>> getSessionsAsTeacher(Principal principal) {
-		return null;
+        return ResponseEntity.ok(
+                sessionService.getSessionsAsTeacher(principal.getName()).stream()
+                        .map(SessionConverter::convertToSessionFE)
+                        .collect(Collectors.toList())
+        );
 	}
 	
 	@GetMapping("/sessions/{sessionID}")

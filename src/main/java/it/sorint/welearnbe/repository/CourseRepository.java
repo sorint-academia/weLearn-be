@@ -8,4 +8,6 @@ import it.sorint.welearnbe.repository.entity.CourseBE;
 
 public interface CourseRepository extends MongoRepository<CourseBE, UUID> {
 
+
+
 }
