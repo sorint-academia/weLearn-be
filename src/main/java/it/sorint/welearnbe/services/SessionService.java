@@ -18,7 +18,19 @@ public class SessionService {
 	
 	public List<SessionBE> getSessions() {
 		return sessionRepository.findAll();
-	} 
+	}
+
+	public List<SessionBE> getSessionsAsStudent(String name){
+		return sessionRepository.findAll().stream()
+                .filter(s -> s.getStudents().contains(name))
+                .collect(Collectors.toList());
+	}
+    public List<SessionBE> getSessionsAsTeacher(String name){
+        return sessionRepository.findAll().stream()
+                .filter(s ->  s.getTeacher().equals(name))
+                .collect(Collectors.toList());
+    }
+
 	
 	public List<SessionBE> getSessionsByTeacherName(String username) {
 		return sessionRepository.findAllByTeacher(username);
