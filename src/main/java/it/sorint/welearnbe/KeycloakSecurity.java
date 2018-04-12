@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,6 +52,10 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
    {
       super.configure(http);
       http
-            .authorizeRequests().anyRequest().permitAll();
+              .authorizeRequests()
+              .antMatchers(HttpMethod.GET, "/api/courses").authenticated()
+              .antMatchers(HttpMethod.GET, "/api/sessions/asStudent").authenticated()
+              .antMatchers(HttpMethod.GET, "/api/sessions/asSteacher").authenticated()
+              .anyRequest().permitAll();
    }
 }
