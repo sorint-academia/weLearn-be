@@ -33,6 +33,7 @@ public class CourseController {
 	
 	@GetMapping("/courses")
 	public ResponseEntity<List<CourseFE>> getCourses(Principal principal) {
+		//Return all viewable courses mapped from CourseBE to CourseFE
 		return ResponseEntity.ok(
 				courseService.getCourses(principal.getName()).stream()
 					.map(be -> CourseConverter.convertToCourseFE(be))
@@ -41,40 +42,48 @@ public class CourseController {
 	
 	@GetMapping("/courses/{courseID}")
 	public ResponseEntity<CourseWithUnitsFE> getCourse(Principal principal, @PathVariable("courseID") UUID courseID) {
+		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
 	@GetMapping("/courses/{courseID}/units")
 	public ResponseEntity<List<UnitFE>> getUnits(Principal principal, @PathVariable("courseID") UUID courseID) {
+		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}")
 	public ResponseEntity<UnitWithWidgetsFE> getUnit(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
+		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
 	@GetMapping("/courses/{courseID}/units/{unitID}/widgets")
 	public ResponseEntity<List<WidgetFE>> getWidget(Principal principal, @PathVariable("courseID") UUID courseID, @PathVariable("unitID") UUID unitID) {
+		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfCourse(principal.getName(), courseID) | sessionService.isTeacherOfCourse(principal.getName(), courseID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}

@@ -17,6 +17,7 @@ import it.sorint.welearnbe.repository.entity.ProgressWidgetBE;
 public class ProgressConverter {
 	public static ProgressFE convertToProgressFE(ProgressBE backend) {
 		ProgressFE frontend = new ProgressFE();
+		//Copy the fields
 		frontend.setCourseID("/api/courses/" + backend.getCourseID());
 		frontend.setProgressID("/api/progresses/" + backend.getId());
 		frontend.setStudentID(backend.getStudent());
@@ -25,6 +26,7 @@ public class ProgressConverter {
 	
 	public static ProgressProjectFE convertToProgressProjectFE(ProgressProjectBE backend, UUID progressID) {
 		ProgressProjectFE frontend = new ProgressProjectFE();
+		//Copy the fields
 		frontend.setProgressProjectID("/api/progresses/" + progressID + "/projects/" + backend.getId());
 		frontend.setProjectID("/api/projects/" + backend.getId());
 		frontend.setVersion(backend.getVersion());
@@ -33,6 +35,7 @@ public class ProgressConverter {
 	
 	public static ProgressProjectWithFilenamesFE convertToProgressProjectWithFilenameFE(ProgressProjectBE backend, UUID progressID) {
 		ProgressProjectWithFilenamesFE frontend = new ProgressProjectWithFilenamesFE();
+		//Copy the fields
 		frontend.setProgressProjectID("/api/progresses/" + progressID + "/projects/" + backend.getId());
 		frontend.setProjectID("/api/projects/" + backend.getId());
 		frontend.setVersion(backend.getVersion());
@@ -43,14 +46,17 @@ public class ProgressConverter {
 	
 	public static ProgressUnitFE convertToProgressUnitFE(ProgressUnitBE backend, UUID progressID) {
 		ProgressUnitFE frontend = new ProgressUnitFE();
+		//Copy the fields
 		frontend.setCompleted(backend.getCompleted());
 		frontend.setUnitID("/api/progresses/" + progressID + "/courses/" + backend.getCourseId() + "/units/" + backend.getId());
+		//Copy the widgets converted to ProgressWidgetFE
 		frontend.setWidgets(backend.getWidgets().stream().map(be -> convertToProgressWidgetFE(be, progressID, backend.getCourseId() , backend.getId())).collect(Collectors.toList()));
 		return frontend;
 	}
 	
 	public static ProgressWidgetFE convertToProgressWidgetFE(ProgressWidgetBE backend, UUID progressID, UUID courseID, UUID unitID) {
 		ProgressWidgetFE frontend = new ProgressWidgetFE();
+		//Copy the fields
 		frontend.setCompleted(backend.getCompleted());
 		frontend.setWidgetID("/api/progresses/" + progressID + "/courses/" + courseID + "/units/" + backend.getId() + "/widgets/" + backend.getId());
 		return frontend;
@@ -58,9 +64,11 @@ public class ProgressConverter {
 	
 	public static ProgressWithProgressUnitFE convertToProgressWithUnitFE(ProgressBE backend) {
 		ProgressWithProgressUnitFE frontend = new ProgressWithProgressUnitFE();
+		//Copy the fields
 		frontend.setCourseID("/api/courses/" + backend.getCourseID());
 		frontend.setProgressID("/api/progresses/" + backend.getId());
 		frontend.setStudentID(backend.getStudent());
+		//Copy the widgets converted to ProgressUnitFE
 		frontend.setUnits(backend.getUnits().stream().map(be -> convertToProgressUnitFE(be, backend.getId())).collect(Collectors.toList()));
 		return frontend;
 	}

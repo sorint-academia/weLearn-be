@@ -18,6 +18,7 @@ public class CourseService {
 	private SessionService sessionService;
 	
 	public List<CourseBE> getCourses(String name) {
+		//Get the viewable sessions and then map to course
 		return sessionService.getSessionsByStudentOrTeacherName(name).stream()
 				.map(s -> courseRepository.findOne(s.getCourseID()))
 				.collect(Collectors.toList());

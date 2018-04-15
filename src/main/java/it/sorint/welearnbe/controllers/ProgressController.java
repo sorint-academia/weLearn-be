@@ -34,30 +34,36 @@ public class ProgressController {
 	
 	@GetMapping("/progresses/{progressID}")
 	public ResponseEntity<ProgressFE> getProgresses(Principal principal, @PathVariable("progressID") UUID progressID) {
+		//Return if the principal is the progress' student
 		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
 	@GetMapping("/progresses/{progressID}/projects")
 	public ResponseEntity<List<ProgressProjectFE>> getProgressProjects(Principal principal, @PathVariable("progressID") UUID progressID) {
+		//Return if the principal is the progress' student
 		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
 	@GetMapping("/progresses/{progressID}/projects/{projectID}")
 	public ResponseEntity<ProgressProjectWithFilenamesFE> getProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+		//Return if the principal is the progress' student
 		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
@@ -69,11 +75,12 @@ public class ProgressController {
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
 		//I don't know why but the filename start with files/.
 		filename = filename.replaceFirst("files/", "");
-		
+		//Return if the principal is the progress' student
 		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
 			//TODO: return the correct value! not null
 			return ResponseEntity.ok(null);	
 		} else {
+			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
