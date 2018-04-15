@@ -7,6 +7,7 @@ public class SessionConverter {
 
 	public static SessionFE convertToSessionFE(SessionBE backend) {
 		SessionFE frontend = new SessionFE();
+		//Copy the fields
 		frontend.setCourseID("/api/courses/" + backend.getCourseID());
 		frontend.setEndDate(backend.getEndDate());
 		frontend.setSessionID("/api/sessions/" + backend.getId());
