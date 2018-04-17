@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataMongoTest
-//@Import(TestMongoConfig.class)
 public class WelearnBeApplicationTests {
 
 	@Autowired
