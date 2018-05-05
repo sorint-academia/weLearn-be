@@ -20,7 +20,7 @@ public class CourseConverter {
 		frontend.setAuthor(backend.getAuthor());
 		frontend.setCourseID("/api/courses/" + backend.getId());
 		frontend.setDescription(backend.getDescription());
-		frontend.setTitle(frontend.getTitle());
+		frontend.setTitle(backend.getTitle());
 		return frontend;
 	}
 	
