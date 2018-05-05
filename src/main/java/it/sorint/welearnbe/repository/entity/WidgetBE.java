@@ -10,6 +10,18 @@ public class WidgetBE {
 	UUID projectID;
 	String mode;
 	
+	public WidgetBE() {
+		super();
+	}
+	public WidgetBE(UUID id, String type, String text, String lang, UUID projectID, String mode) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.text = text;
+		this.lang = lang;
+		this.projectID = projectID;
+		this.mode = mode;
+	}
 	public UUID getId() {
 		return id;
 	}
