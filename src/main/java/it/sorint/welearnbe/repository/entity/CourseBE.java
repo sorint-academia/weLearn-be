@@ -3,14 +3,28 @@ package it.sorint.welearnbe.repository.entity;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="courses")
 public class CourseBE {
+	
 	UUID id;
 	String title;
 	String description;
 	String author;
 	List<UnitBE> units;
 	
-	
+	public CourseBE() {
+		super();
+	}
+	public CourseBE(UUID id, String title, String description, String author, List<UnitBE> units) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.author = author;
+		this.units = units;
+	}
 	public UUID getId() {
 		return id;
 	}

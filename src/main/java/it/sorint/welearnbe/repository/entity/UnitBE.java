@@ -9,6 +9,16 @@ public class UnitBE {
 	String description;
 	List<WidgetBE> widgets;
 	
+	public UnitBE() {
+		super();
+	}
+	public UnitBE(UUID id, String title, String description, List<WidgetBE> widgets) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.widgets = widgets;
+	}
 	public UUID getId() {
 		return id;
 	}

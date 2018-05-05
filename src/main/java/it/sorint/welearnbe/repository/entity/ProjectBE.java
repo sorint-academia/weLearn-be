@@ -3,6 +3,9 @@ package it.sorint.welearnbe.repository.entity;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="projects")
 public class ProjectBE {
 	UUID id;
 	String name;

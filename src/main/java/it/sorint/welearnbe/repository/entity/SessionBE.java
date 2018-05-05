@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="sessions")
 public class SessionBE {
 	UUID id;
 	UUID courseID;
@@ -13,6 +16,19 @@ public class SessionBE {
 	LocalDate endDate;
 	
 	
+	public SessionBE() {
+		super();
+	}
+	public SessionBE(UUID id, UUID courseID, String teacher, List<String> students, LocalDate startDate,
+			LocalDate endDate) {
+		super();
+		this.id = id;
+		this.courseID = courseID;
+		this.teacher = teacher;
+		this.students = students;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 	public UUID getId() {
 		return id;
 	}
