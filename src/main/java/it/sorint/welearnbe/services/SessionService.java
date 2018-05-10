@@ -12,10 +12,10 @@ import it.sorint.welearnbe.repository.entity.SessionBE;
 
 @Service
 public class SessionService {
-	
+
 	@Autowired
 	private SessionRepository sessionRepository;
-	
+
 	public List<SessionBE> getSessions() {
 		//Return all sessions
 		return sessionRepository.findAll();
@@ -25,41 +25,41 @@ public class SessionService {
 		//Return all sessions filtered by teacher
 		return sessionRepository.findAllByTeacher(username);
 	}
-	
+
 	public List<SessionBE> getSessionsByStudentName(String username) {
-		//Return all sessions where the user(name) is a student. 
+		//Return all sessions where the user(name) is a student.
 		return sessionRepository.findAll().stream()
 				.filter(s -> s.getStudents()
 				.contains(username)).collect(Collectors.toList());
 	}
-	
+
 	public List<SessionBE> getSessionsByStudentOrTeacherName(String username) {
 		//Return all sessions where the user(name) is a teacher or a student
-		return sessionRepository.findAll().stream().filter(s -> 
+		return sessionRepository.findAll().stream().filter(s ->
 					s.getStudents().contains(username) || s.getTeacher() == username
 				).collect(Collectors.toList());
 	}
-		
-	
-	//_course_student_ 
+
+
+	//_course_student_
 	public boolean isStudentOfCourse(String user, UUID courseID) {
 		//TODO: implement this function
 		return true;
 	}
-	//_course_student_ 
+	//_course_student_
 	public boolean isTeacherOfCourse(String user, UUID courseID) {
 		//TODO: implement this function
 		return true;
 	}
-	//_course_student_ 
+	//_course_student_
 	public boolean isStudentOfSession(String user, UUID sessionID) {
 		//TODO: implement this function
 		return true;
-	}	
-	//_course_teacher_ 
+	}
+	//_course_teacher_
 	public boolean isTeacherOfSession(String user, UUID sessionID) {
 		//TODO: implement this function
 		return true;
-	}	
+	}
 
 }

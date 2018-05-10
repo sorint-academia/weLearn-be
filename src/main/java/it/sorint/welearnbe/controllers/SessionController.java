@@ -28,7 +28,7 @@ public class SessionController {
 	public ResponseEntity<List<SessionFE>> getSessions(Principal principal) {
 	    return null;
 	}
-	
+
 	@GetMapping("/sessions/asStudent")
 	public ResponseEntity<List<SessionFE>> getSessionsAsStudent(Principal principal) {
         //Return the list of the principal's sessions as student converted to SessionFE
@@ -38,7 +38,7 @@ public class SessionController {
                 .collect(Collectors.toList())
         );
 	}
-	
+
 	@GetMapping("/sessions/asTeacher")
 	public ResponseEntity<List<SessionFE>> getSessionsAsTeacher(Principal principal) {
 		//Return the list of the principal's sessions as teacher converted to SessionFE
@@ -48,25 +48,25 @@ public class SessionController {
                         .collect(Collectors.toList())
         );
 	}
-	
+
 	@GetMapping("/sessions/{sessionID}")
 	public ResponseEntity<List<SessionFE>> getSession(Principal principal, @PathVariable("sessionID") UUID sessionID) {
 		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfSession(principal.getName(), sessionID) | sessionService.isTeacherOfSession(principal.getName(), sessionID)) {
 			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);	
+			return ResponseEntity.ok(null);
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
-	
+
 	@GetMapping("/sessions/{sessionID}/students")
 	public ResponseEntity<List<String>> getSessionStudents(Principal principal, @PathVariable("sessionID") UUID sessionID) {
 		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfSession(principal.getName(), sessionID) | sessionService.isTeacherOfSession(principal.getName(), sessionID)) {
 			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);	
+			return ResponseEntity.ok(null);
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
