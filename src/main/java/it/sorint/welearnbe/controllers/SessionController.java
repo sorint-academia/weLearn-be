@@ -50,11 +50,16 @@ public class SessionController {
 	}
 
 	@GetMapping("/sessions/{sessionID}")
-	public ResponseEntity<List<SessionFE>> getSession(Principal principal, @PathVariable("sessionID") UUID sessionID) {
+	public ResponseEntity<SessionFE> getSession(Principal principal, @PathVariable("sessionID") UUID sessionID) {
 		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfSession(principal.getName(), sessionID) | sessionService.isTeacherOfSession(principal.getName(), sessionID)) {
-			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);
+			SessionFE sessionFE = SessionConverter.convertToSessionFE(sessionService.getSessionById(sessionID));
+
+			if(sessionFE==null){
+				//Return 404 NOT FOUND
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			}
+			return ResponseEntity.ok(sessionFE);
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -65,8 +70,13 @@ public class SessionController {
 	public ResponseEntity<List<String>> getSessionStudents(Principal principal, @PathVariable("sessionID") UUID sessionID) {
 		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfSession(principal.getName(), sessionID) | sessionService.isTeacherOfSession(principal.getName(), sessionID)) {
-			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);
+			List<String> students = sessionService.getStudentsFromSessionId(sessionID);
+			if(students.size()==0){
+				//Return 404 NOT FOUND
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			}else{
+				return ResponseEntity.ok(students);
+			}
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
