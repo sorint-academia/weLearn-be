@@ -10,7 +10,15 @@ public class SessionFE {
 	private List<String> studentsID;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	private Boolean followAsStudent;
+	private Boolean followAsTeacher;
 	
+	public Boolean getFollowAsTeacher() {
+		return followAsTeacher;
+	}
+	public void setFollowAsTeacher(Boolean followAsTeacher) {
+		this.followAsTeacher = followAsTeacher;
+	}
 	public String getSessionID() {
 		return sessionID;
 	}
@@ -46,5 +54,11 @@ public class SessionFE {
 	}
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+	}
+	public Boolean getFollowAsStudent() {
+		return followAsStudent;
+	}
+	public void setFollowAsStudent(Boolean followAsStudent) {
+		this.followAsStudent = followAsStudent;
 	}
 }

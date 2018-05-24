@@ -4,9 +4,15 @@ public class WidgetFE {
 	String widgetID;
 	String type;
 	String text;
-	String lang;
 	String projectID;
+	String ref;
 	
+	public String getRef() {
+		return ref;
+	}
+	public void setRef(String ref) {
+		this.ref = ref;
+	}
 	public String getWidgetID() {
 		return widgetID;
 	}
@@ -24,12 +30,6 @@ public class WidgetFE {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public String getLang() {
-		return lang;
-	}
-	public void setLang(String lang) {
-		this.lang = lang;
 	}
 	public String getProjectID() {
 		return projectID;

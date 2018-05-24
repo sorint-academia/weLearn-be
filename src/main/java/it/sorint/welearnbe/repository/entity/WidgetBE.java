@@ -6,19 +6,25 @@ public class WidgetBE {
 	UUID id;
 	String type;
 	String text;
-	String lang;
 	UUID projectID;
 	String mode;
+	UUID ref;
 	
+	public UUID getRef() {
+		return ref;
+	}
+	public void setRef(UUID ref) {
+		this.ref = ref;
+	}
 	public WidgetBE() {
 		super();
 	}
-	public WidgetBE(UUID id, String type, String text, String lang, UUID projectID, String mode) {
+	public WidgetBE(UUID id, String type, String text, UUID ref, UUID projectID, String mode) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.text = text;
-		this.lang = lang;
+		this.ref = ref;
 		this.projectID = projectID;
 		this.mode = mode;
 	}
@@ -39,12 +45,6 @@ public class WidgetBE {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public String getLang() {
-		return lang;
-	}
-	public void setLang(String lang) {
-		this.lang = lang;
 	}
 	public UUID getProjectID() {
 		return projectID;

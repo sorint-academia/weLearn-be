@@ -1,15 +1,19 @@
 package it.sorint.welearnbe.converter;
 
-import java.util.UUID;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
+
+import it.sorint.welearnbe.controllers.entity.ProgressCourseFE;
 import it.sorint.welearnbe.controllers.entity.ProgressFE;
 import it.sorint.welearnbe.controllers.entity.ProgressProjectFE;
 import it.sorint.welearnbe.controllers.entity.ProgressProjectWithFilenamesFE;
 import it.sorint.welearnbe.controllers.entity.ProgressUnitFE;
 import it.sorint.welearnbe.controllers.entity.ProgressWidgetFE;
-import it.sorint.welearnbe.controllers.entity.ProgressWithProgressUnitFE;
+import it.sorint.welearnbe.controllers.entity.ProgressWithProgressCourseFE;
 import it.sorint.welearnbe.repository.entity.ProgressBE;
+import it.sorint.welearnbe.repository.entity.ProgressCourseBE;
 import it.sorint.welearnbe.repository.entity.ProgressProjectBE;
 import it.sorint.welearnbe.repository.entity.ProgressUnitBE;
 import it.sorint.welearnbe.repository.entity.ProgressWidgetBE;
@@ -17,59 +21,58 @@ import it.sorint.welearnbe.repository.entity.ProgressWidgetBE;
 public class ProgressConverter {
 	public static ProgressFE convertToProgressFE(ProgressBE backend) {
 		ProgressFE frontend = new ProgressFE();
-		//Copy the fields
-		frontend.setCourseID("/api/courses/" + backend.getCourseID());
-		frontend.setProgressID("/api/progresses/" + backend.getId());
+		frontend.setProgressID("/api/progresses/" + backend.getStudent());
 		frontend.setStudentID(backend.getStudent());
 		return frontend;
 	}
-	
-	public static ProgressProjectFE convertToProgressProjectFE(ProgressProjectBE backend, UUID progressID) {
-		ProgressProjectFE frontend = new ProgressProjectFE();
-		//Copy the fields
-		frontend.setProgressProjectID("/api/progresses/" + progressID + "/projects/" + backend.getId());
-		frontend.setProjectID("/api/projects/" + backend.getId());
-		frontend.setVersion(backend.getVersion());
+
+	public static ProgressCourseFE convertToProgressCourseFE(ProgressCourseBE backend, String progressID) {
+		ProgressCourseFE frontend = new ProgressCourseFE();
+		frontend.setCourseID(progressID+"/"+backend.getId());
+		frontend.setUnits(backend.getUnits().stream().map(be -> convertToProgressUnitFE(be, frontend.getCourseID())).collect(Collectors.toList()));
+		//TODO: set completed
+		frontend.setCompleted(false);
 		return frontend;
 	}
 	
-	public static ProgressProjectWithFilenamesFE convertToProgressProjectWithFilenameFE(ProgressProjectBE backend, UUID progressID) {
-		ProgressProjectWithFilenamesFE frontend = new ProgressProjectWithFilenamesFE();
-		//Copy the fields
-		frontend.setProgressProjectID("/api/progresses/" + progressID + "/projects/" + backend.getId());
-		frontend.setProjectID("/api/projects/" + backend.getId());
-		frontend.setVersion(backend.getVersion());
-		//TODO: set filenames
-		//frontend.setFilenames(backend.get);
-		return frontend;
-	}
-	
-	public static ProgressUnitFE convertToProgressUnitFE(ProgressUnitBE backend, UUID progressID) {
+	public static ProgressUnitFE convertToProgressUnitFE(ProgressUnitBE backend, String progressCourseID) {
 		ProgressUnitFE frontend = new ProgressUnitFE();
-		//Copy the fields
-		frontend.setCompleted(backend.getCompleted());
-		frontend.setUnitID("/api/progresses/" + progressID + "/courses/" + backend.getCourseId() + "/units/" + backend.getId());
-		//Copy the widgets converted to ProgressWidgetFE
-		frontend.setWidgets(backend.getWidgets().stream().map(be -> convertToProgressWidgetFE(be, progressID, backend.getCourseId() , backend.getId())).collect(Collectors.toList()));
+		frontend.setUnitID(progressCourseID+"/" + backend.getId());
+		frontend.setWidgets(backend.getWidgets().stream().map(be -> convertToProgressWidgetFE(be, frontend.getUnitID())).collect(Collectors.toList()));
+		//TODO: set completed
+		frontend.setCompleted(false);
 		return frontend;
 	}
 	
-	public static ProgressWidgetFE convertToProgressWidgetFE(ProgressWidgetBE backend, UUID progressID, UUID courseID, UUID unitID) {
+	public static ProgressWidgetFE convertToProgressWidgetFE(ProgressWidgetBE backend, String progressUnitID) {
 		ProgressWidgetFE frontend = new ProgressWidgetFE();
-		//Copy the fields
+		frontend.setWidgetID(progressUnitID + "/" + backend.getId());
 		frontend.setCompleted(backend.getCompleted());
-		frontend.setWidgetID("/api/progresses/" + progressID + "/courses/" + courseID + "/units/" + backend.getId() + "/widgets/" + backend.getId());
+		return frontend;
+	}
+
+	public static ProgressWithProgressCourseFE convertToProgressCourseFE(ProgressBE backend) {
+		ProgressWithProgressCourseFE frontend = new ProgressWithProgressCourseFE();
+		frontend.setProgressID("/api/progresses/" + backend.getStudent());
+		frontend.setStudentID(backend.getStudent());
+		frontend.setCourses(backend.getCourses().stream().map(be -> convertToProgressCourseFE(be, frontend.getProgressID())).collect(Collectors.toList()));
 		return frontend;
 	}
 	
-	public static ProgressWithProgressUnitFE convertToProgressWithUnitFE(ProgressBE backend) {
-		ProgressWithProgressUnitFE frontend = new ProgressWithProgressUnitFE();
-		//Copy the fields
-		frontend.setCourseID("/api/courses/" + backend.getCourseID());
-		frontend.setProgressID("/api/progresses/" + backend.getId());
-		frontend.setStudentID(backend.getStudent());
-		//Copy the widgets converted to ProgressUnitFE
-		frontend.setUnits(backend.getUnits().stream().map(be -> convertToProgressUnitFE(be, backend.getId())).collect(Collectors.toList()));
+	public static ProgressProjectFE convertToProgressProjectFE(ProgressProjectBE backend, String progressID) {
+		ProgressProjectFE frontend = new ProgressProjectFE();
+		frontend.setProjectID("/api/projects/" + backend.getId());
+		frontend.setProgressProjectID(progressID + "/projects/" + backend.getId());
+		frontend.setVersion(backend.getVersion());
+		return frontend;
+	}
+	
+	public static ProgressProjectWithFilenamesFE convertToProgressProjectWithFilenamesFE(ProgressProjectBE backend, String progressID, HashMap<ObjectId, String> files) {
+		ProgressProjectWithFilenamesFE frontend = new ProgressProjectWithFilenamesFE();
+		frontend.setProjectID("/api/projects/" + backend.getId());
+		frontend.setProgressProjectID(progressID + "/projects/" + backend.getId());
+		frontend.setVersion(backend.getVersion());
+		frontend.setFilenames(backend.getFiles().stream().map(id -> files.get(id)).collect(Collectors.toList()));
 		return frontend;
 	}
 }

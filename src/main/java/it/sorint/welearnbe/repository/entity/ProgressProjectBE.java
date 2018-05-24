@@ -1,11 +1,14 @@
 package it.sorint.welearnbe.repository.entity;
 
+import java.util.List;
 import java.util.UUID;
+
+import org.bson.types.ObjectId;
 
 public class ProgressProjectBE {
 	UUID id;
 	int version;
-	String diff;
+	List<ObjectId> files;
 	
 	public UUID getId() {
 		return id;
@@ -19,10 +22,10 @@ public class ProgressProjectBE {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	public String getDiff() {
-		return diff;
+	public List<ObjectId> getFiles() {
+		return files;
 	}
-	public void setDiff(String diff) {
-		this.diff = diff;
+	public void setFiles(List<ObjectId> files) {
+		this.files = files;
 	}
 }

@@ -2,24 +2,11 @@ package it.sorint.welearnbe.controllers.entity;
 
 import java.util.List;
 
-public class ProgressWithProgressUnitFE {
-	private String progressID;
-	private String studentID;
+public class ProgressCourseFE {
 	private String courseID;
+	private Boolean completed;
 	private List<ProgressUnitFE> units;
 	
-	public String getProgressID() {
-		return progressID;
-	}
-	public void setProgressID(String progressID) {
-		this.progressID = progressID;
-	}
-	public String getStudentID() {
-		return studentID;
-	}
-	public void setStudentID(String studentID) {
-		this.studentID = studentID;
-	}
 	public String getCourseID() {
 		return courseID;
 	}
@@ -31,5 +18,11 @@ public class ProgressWithProgressUnitFE {
 	}
 	public void setUnits(List<ProgressUnitFE> units) {
 		this.units = units;
+	}
+	public Boolean getCompleted() {
+		return completed;
+	}
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
 	}
 }

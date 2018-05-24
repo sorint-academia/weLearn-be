@@ -3,14 +3,17 @@ package it.sorint.welearnbe.repository.entity;
 import java.util.List;
 import java.util.UUID;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="projects")
 public class ProjectBE {
-	UUID id;
-	String name;
-	String mainFile;
-	List<ProjectFileBE> files;
+	private UUID id;
+	private String name;
+	private UUID previousProjectID;
+	private int version;
+	List<ObjectId> files;
+	List<ExecutionConfigBE> executionConfigs;
 	
 	public UUID getId() {
 		return id;
@@ -24,16 +27,29 @@ public class ProjectBE {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getMainFile() {
-		return mainFile;
+	public UUID getPreviousProjectID() {
+		return previousProjectID;
 	}
-	public void setMainFile(String mainFile) {
-		this.mainFile = mainFile;
+	public void setPreviousProjectID(UUID previousProjectID) {
+		this.previousProjectID = previousProjectID;
 	}
-	public List<ProjectFileBE> getFiles() {
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public List<ObjectId> getFiles() {
 		return files;
 	}
-	public void setFiles(List<ProjectFileBE> files) {
+	public void setFiles(List<ObjectId> files) {
 		this.files = files;
 	}
+	public List<ExecutionConfigBE> getExecutionConfigs() {
+		return executionConfigs;
+	}
+	public void setExecutionConfigs(List<ExecutionConfigBE> executionConfigs) {
+		this.executionConfigs = executionConfigs;
+	}
+	
 }
