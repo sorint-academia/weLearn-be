@@ -58,11 +58,11 @@ public class CourseConverter {
     public static WidgetFE convertToWidgetFE(WidgetBE backend, UUID courseID, UUID unitID) {
         WidgetFE frontend = new WidgetFE();
         //Copy the fields
-        frontend.setLang(backend.getLang());
         frontend.setProjectID("/api/projects/" + backend.getProjectID());
         frontend.setText(backend.getText());
         frontend.setType(backend.getType());
         frontend.setWidgetID("/api/courses/" + courseID + "/units/" + backend.getId() + "/widgets/" + backend.getId());
+        frontend.setRef("/api/courses/" + courseID + "/units/" + backend.getId() + "/widgets/" + backend.getRef());
         return frontend;
     }
 }

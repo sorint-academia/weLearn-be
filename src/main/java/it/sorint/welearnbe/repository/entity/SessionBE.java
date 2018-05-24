@@ -15,7 +15,6 @@ public class SessionBE {
 	LocalDate startDate;
 	LocalDate endDate;
 	
-	
 	public SessionBE() {
 		super();
 	}

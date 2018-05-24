@@ -34,7 +34,7 @@ public class SessionController {
         //Return the list of the principal's sessions as student converted to SessionFE
 		return ResponseEntity.ok(
                 sessionService.getSessionsByStudentName(principal.getName()).stream()
-                        .map(SessionConverter::convertToSessionFE)
+                        .map(be -> SessionConverter.convertToSessionFE(be, principal.getName()))
                 .collect(Collectors.toList())
         );
 	}
@@ -44,7 +44,7 @@ public class SessionController {
 		//Return the list of the principal's sessions as teacher converted to SessionFE
 		return ResponseEntity.ok(
                 sessionService.getSessionsByTeacherName(principal.getName()).stream()
-                        .map(SessionConverter::convertToSessionFE)
+                        .map(be -> SessionConverter.convertToSessionFE(be, principal.getName()))
                         .collect(Collectors.toList())
         );
 	}
@@ -53,7 +53,7 @@ public class SessionController {
 	public ResponseEntity<SessionFE> getSession(Principal principal, @PathVariable("sessionID") UUID sessionID) {
 		//Check if the principal is the course's teacher or course's student
 		if (sessionService.isStudentOfSession(principal.getName(), sessionID) | sessionService.isTeacherOfSession(principal.getName(), sessionID)) {
-			SessionFE sessionFE = SessionConverter.convertToSessionFE(sessionService.getSessionById(sessionID));
+			SessionFE sessionFE = SessionConverter.convertToSessionFE(sessionService.getSessionById(sessionID), principal.getName());
 
 			if(sessionFE==null){
 				//Return 404 NOT FOUND
