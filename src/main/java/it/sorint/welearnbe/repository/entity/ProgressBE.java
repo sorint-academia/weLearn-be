@@ -2,10 +2,12 @@ package it.sorint.welearnbe.repository.entity;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="progresses")
 public class ProgressBE {
+	@Id
 	String student;
 	List<ProgressCourseBE> courses;
 	List<ProgressProjectBE> projects;
