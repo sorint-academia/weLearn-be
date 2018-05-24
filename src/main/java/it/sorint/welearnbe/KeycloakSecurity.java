@@ -54,8 +54,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
       http
               .authorizeRequests()
               .antMatchers(HttpMethod.GET, "/api/courses").authenticated()
-              .antMatchers(HttpMethod.GET, "/api/sessions/asStudent").authenticated()
-              .antMatchers(HttpMethod.GET, "/api/sessions/asTeacher").authenticated()
+              .antMatchers(HttpMethod.GET, "/api/sessions").authenticated()
               .anyRequest().permitAll();
    }
 }
