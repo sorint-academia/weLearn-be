@@ -1,13 +1,13 @@
 package it.sorint.welearnbe.nuvolamagica.objects;
 
 public class NewSessionResponse {
-	private string sessionID;
+	private String sessionID;
 
-	public string getSessionID() {
+	public String getSessionID() {
 		return sessionID;
 	}
 
-	public void setSessionID(string sessionID) {
+	public void setSessionID(String sessionID) {
 		this.sessionID = sessionID;
 	}
 	

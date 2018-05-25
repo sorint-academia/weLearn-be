@@ -1,5 +1,6 @@
 package it.sorint.welearnbe.controllers;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
@@ -136,7 +137,7 @@ public class ProgressController {
 	}
 	
 	@PutMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
-	public ResponseEntity<Void> putProgressProjectFile(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request, InputStream stream) {
+	public ResponseEntity<Void> putProgressProjectFile(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request, InputStream stream) throws IOException {
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
@@ -153,7 +154,7 @@ public class ProgressController {
 			student2 = student;
 		}
 		if (student == principal.getName()) {
-			Boolean res = progressService.putFile();
+			Boolean res = progressService.putFileOfProgressProject(student2, projectID, filename, content, principal.getName());
 			if (res)
 				return ResponseEntity.ok().build();
 			else

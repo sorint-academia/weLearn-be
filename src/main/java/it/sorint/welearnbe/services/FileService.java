@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.mongodb.gridfs.GridFSDBFile;
 
 import it.sorint.welearnbe.repository.entity.FileMetadataBE;
-import sun.invoke.empty.Empty;
 
 @Service
 public class FileService {
