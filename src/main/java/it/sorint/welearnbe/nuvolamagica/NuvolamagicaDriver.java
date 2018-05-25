@@ -68,7 +68,7 @@ public class NuvolamagicaDriver {
 		}
 	}
 	
-	public Optional<String> build(String sessionID, ExecutionRequest request) {
+	public Optional<String> exec(String sessionID, ExecutionRequest request) {
 		//Make the request
 		ResponseEntity<ExecutionResponse> executionResponse = restTemplate.postForEntity(sessionID + "/processes", request, ExecutionResponse.class);
 		//Check if it has returned 200 OK
