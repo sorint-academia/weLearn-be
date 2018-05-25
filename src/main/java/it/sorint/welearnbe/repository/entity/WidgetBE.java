@@ -7,7 +7,6 @@ public class WidgetBE {
 	String type;
 	String text;
 	UUID projectID;
-	String mode;
 	UUID ref;
 	
 	public UUID getRef() {
@@ -19,14 +18,13 @@ public class WidgetBE {
 	public WidgetBE() {
 		super();
 	}
-	public WidgetBE(UUID id, String type, String text, UUID ref, UUID projectID, String mode) {
+	public WidgetBE(UUID id, String type, String text, UUID ref, UUID projectID) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.text = text;
 		this.ref = ref;
 		this.projectID = projectID;
-		this.mode = mode;
 	}
 	public UUID getId() {
 		return id;
@@ -52,10 +50,5 @@ public class WidgetBE {
 	public void setProjectID(UUID projectID) {
 		this.projectID = projectID;
 	}
-	public String getMode() {
-		return mode;
-	}
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
+
 }

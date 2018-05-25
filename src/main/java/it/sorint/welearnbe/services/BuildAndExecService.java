@@ -82,7 +82,7 @@ public class BuildAndExecService {
 		if (!config.isPresent())
 			return false;
 		ExecutionRequest req = new ExecutionRequest();
-		req.setLang(config.get().getLang());
+		req.setLangType(config.get().getLang());
 		req.setMainFile(config.get().getMainFile());
 		req.setChrootDir(projectID.toString());
 		req.setOptions("");
