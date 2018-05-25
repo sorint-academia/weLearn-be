@@ -2,7 +2,7 @@ package it.sorint.welearnbe.nuvolamagica.objects;
 
 public class BuildRequest {
 	private String chrootDir;
-	private String lang;
+	private String langType;
 	private String options;
 	private String mainFile;
 	
@@ -12,12 +12,6 @@ public class BuildRequest {
 	}
 	public void setChrootDir(String chrootDir) {
 		this.chrootDir = chrootDir;
-	}
-	public String getLang() {
-		return lang;
-	}
-	public void setLang(String lang) {
-		this.lang = lang;
 	}
 	public String getOptions() {
 		return options;
@@ -30,5 +24,11 @@ public class BuildRequest {
 	}
 	public void setMainFile(String mainFile) {
 		this.mainFile = mainFile;
+	}
+	public String getLangType() {
+		return langType;
+	}
+	public void setLangType(String langType) {
+		this.langType = langType;
 	}
 }

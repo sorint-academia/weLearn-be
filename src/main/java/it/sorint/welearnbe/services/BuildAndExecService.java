@@ -53,7 +53,7 @@ public class BuildAndExecService {
 		//UPLOAD files
 		progressProject.get().getProgressProject().getFiles().forEach(f -> {
 			try {
-				nuvolamagicaDriver.putFile(session, fileService.getFilename(f).get(), fileService.loadFileById(f).get());
+				nuvolamagicaDriver.putFile(session, projectID.toString() + "/" + fileService.getFilename(f).get(), fileService.loadFileById(f).get());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,7 +65,7 @@ public class BuildAndExecService {
 		Optional<ExecutionConfigBE> config = projectService.getExecutionConfig(username, projectID, executionConfig);
 		if (!config.isPresent())
 			return Optional.empty();
-		req.setLang(config.get().getLang());
+		req.setLangType(config.get().getLang());
 		req.setMainFile(config.get().getMainFile());
 		req.setChrootDir(projectID.toString());
 		req.setOptions("");

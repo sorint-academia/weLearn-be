@@ -13,9 +13,12 @@ public class NuvolaMagicaConfigurator {
 	private String USERNAME;
 	@Value("${nuvola-magica.password:Nuvolamag!c4}")
 	private String PASSWORD;
+	@Value("${nuvola-magica.base_url:http://127.0.0.1:8090}")
+	private String BASE_URL;
 	
 	@Bean()
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.basicAuthorization(USERNAME, PASSWORD).build();
+
+		return builder.rootUri(BASE_URL).basicAuthorization(USERNAME, PASSWORD).build();
 	}
 }
