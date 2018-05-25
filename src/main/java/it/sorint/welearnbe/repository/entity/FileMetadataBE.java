@@ -7,7 +7,16 @@ public class FileMetadataBE {
 	private Boolean hidden;
 	private Boolean locked;
 	
-	
+	public FileMetadataBE(String id, String filename, Boolean hidden, Boolean locked) {
+		super();
+		this.id = id;
+		this.filename = filename;
+		this.hidden = hidden;
+		this.locked = locked;
+	}
+	public FileMetadataBE() {
+		super();
+	}
 	public String getId() {
 		return id;
 	}
