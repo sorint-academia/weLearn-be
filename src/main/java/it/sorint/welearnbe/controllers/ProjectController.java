@@ -38,6 +38,9 @@ public class ProjectController {
 	
 	@GetMapping("/projects/{projectID}")
 	public ResponseEntity<ProjectWithFilesFE> getProject(Principal principal, @PathVariable("projectID") UUID projectID) {
+		System.out.println(principal);
+		System.out.println(projectID);
+		System.out.println(projectService);
 		Optional<ProjectBE> backend = projectService.getProject(principal.getName(), projectID);
 		if (backend.isPresent())
 			return ResponseEntity.ok(ProjectConverter.convertToProjectWithFilesFE(backend.get(), fileService.getFileMetadatas(), fileService.getFilenames()));
