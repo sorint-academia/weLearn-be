@@ -57,7 +57,7 @@ public class ProgressService {
 	
 	public Optional<ProgressAndProgressProject> getOrCreateProgressProject(String student, UUID projectID) {
 		ProgressBE progress = getOrCreateProgress(student);
-		Optional<ProgressProjectBE> fromRepository = progress.getProjects().stream().filter(pr -> pr.getId() == projectID).findFirst();
+		Optional<ProgressProjectBE> fromRepository = progress.getProjects().stream().filter(pr -> pr.getId().equals(projectID)).findFirst();
 		if (fromRepository.isPresent()) {
 			return Optional.of(new ProgressAndProgressProject(progress, fromRepository.get()));
 		} else {
