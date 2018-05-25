@@ -49,12 +49,11 @@ public class ProgressController {
 	@GetMapping("/progresses/{student}")
 	public ResponseEntity<ProgressFE> getProgresses(Principal principal, @PathVariable("student") String student) {
 		//Return if the principal is the progress' student
-		System.out.println(student);
-		System.out.println(principal.getName());
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student = principal.getName();
 		}
 		if (student.equals(principal.getName())) {
+			System.out.println("ciao");
 			Optional<ProgressBE> be = progressService.getProgress(student, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressWithProgressCourseFE(be.get()));
@@ -71,12 +70,12 @@ public class ProgressController {
 	public ResponseEntity<List<ProgressProjectFE>> getProgressProjects(Principal principal, @PathVariable("student") final String student) {
 		//Return if the principal is the progress' student
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
 		}
-		if (student.equals(principal.getName())) {
+		if (student2.equals(principal.getName())) {
 			Optional<ProgressBE> be = progressService.getProgress(student2, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(be.get().getProjects().stream()
@@ -95,7 +94,7 @@ public class ProgressController {
 	public ResponseEntity<ProgressProjectWithFilenamesFE> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID) {
 		//Return if the principal is the progress' student
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
@@ -121,7 +120,7 @@ public class ProgressController {
 		filename = filename.replaceFirst("files/", "");
 		//Return if the principal is the progress' student
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
@@ -150,7 +149,7 @@ public class ProgressController {
 		byte[] content = IOUtils.toByteArray(stream);
 		
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;

@@ -26,7 +26,7 @@ public class BuildAndExecController {
 	@PostMapping("/progresses/{student}/projects/{projectID}/build/{executionConfig}")
 	public ResponseEntity<BuildResponse> buildProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, @PathVariable("executionConfig") String executionConfig) {
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
@@ -49,7 +49,7 @@ public class BuildAndExecController {
 	@PostMapping("/progresses/{student}/projects/{projectID}/exec/{executionConfig}")
 	public ResponseEntity<Void> execProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, @PathVariable("executionConfig") String executionConfig) {
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
@@ -70,7 +70,7 @@ public class BuildAndExecController {
 	@GetMapping("/progresses/{student}/projects/{projectID}/stdout")
 	public ResponseEntity<byte[]> stdoutProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID) {
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
@@ -91,7 +91,7 @@ public class BuildAndExecController {
 	@GetMapping("/progresses/{student}/projects/{projectID}/stderr")
 	public ResponseEntity<byte[]> stderrProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID) {
 		final String student2;
-		if (student == "myself") {
+		if (student.equals("myself")) {
 			student2 = principal.getName();
 		} else {
 			student2 = student;
