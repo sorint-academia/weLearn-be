@@ -91,4 +91,34 @@ public class FileService {
 		
 		
 	}
+
+	public Optional<OldNewFileId> saveFileByFilenameAndAnyOfIds(List<String> files, String filename, byte[] content) {
+		//Find the correct file
+		Optional<GridFSDBFile> oldFile = files.stream().filter(id -> {
+			GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			return f != null;
+		}).map(id -> {
+			GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
+			return f;
+		}).findFirst();
+		
+		if (oldFile.isPresent()) {
+			String newFile = simpleSave(filename, content, new FileMetadataBE (
+					(Boolean) oldFile.get().getMetaData().get("hidden"), 
+					(Boolean) oldFile.get().getMetaData().get("locked")));
+			return Optional.of(new OldNewFileId(oldFile.get().getId().toString(), newFile));			
+		} else {
+			return Optional.empty();
+		}
+
+	}
+	
+	public Optional<String> getFilename(String id) {
+		GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+		if (f == null)
+			return Optional.empty();
+		else
+			return Optional.of(f.getFilename());
+	}
 }

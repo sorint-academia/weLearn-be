@@ -1,5 +1,7 @@
 package it.sorint.welearnbe.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +10,14 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -107,7 +111,7 @@ public class ProgressController {
 	}
 	
 	@GetMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
-	public ResponseEntity<byte[]> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
+	public ResponseEntity<byte[]> getProgressProjectFile(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
@@ -131,4 +135,34 @@ public class ProgressController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
+	
+	@PutMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
+	public ResponseEntity<Void> putProgressProjectFile(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request, InputStream stream) throws IOException {
+		//Get file name
+		String filename = new AntPathMatcher()
+	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
+		//I don't know why but the filename start with files/.
+		filename = filename.replaceFirst("files/", "");
+		//Return if the principal is the progress' student
+		//Get file content
+		byte[] content = IOUtils.toByteArray(stream);
+		
+		final String student2;
+		if (student == "myself") {
+			student2 = principal.getName();
+		} else {
+			student2 = student;
+		}
+		if (student == principal.getName()) {
+			Boolean res = progressService.putFileOfProgressProject(student2, projectID, filename, content, principal.getName());
+			if (res)
+				return ResponseEntity.ok().build();
+			else
+				return ResponseEntity.notFound().build();
+		} else {
+			//Return 403 FORBIDDEN
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}	
+	}
+	
 }
