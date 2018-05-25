@@ -29,19 +29,18 @@ public class FileService {
 	}
 	
 	public HashMap<String, FileMetadataBE> getFileMetadatas() {
-		List<GridFSDBFile> files = gridFsTemplate.find(new Query());
+		List<GridFSDBFile> files = gridFsTemplate.find(new Query(new Criteria()));
 		HashMap<String, FileMetadataBE> metadatas = new HashMap<>();
-		files.forEach(
-				item -> metadatas.put(item.getId().toString(), new FileMetadataBE(
-							(Boolean)item.getMetaData().get("hidden"), 
-							(Boolean)item.getMetaData().get("locked"))
-						)
-				);
+		files.forEach(item -> {
+			metadatas.put(item.getId().toString(), new FileMetadataBE(
+					(Boolean)item.getMetaData().get("hidden"), 
+					(Boolean)item.getMetaData().get("locked"))); 
+		});
 		
 		return metadatas;
 	}
 	public HashMap<String, String> getFilenames() {
-		List<GridFSDBFile> files = gridFsTemplate.find(new Query());
+		List<GridFSDBFile> files = gridFsTemplate.find(new Query(new Criteria()));
 		HashMap<String, String> filenames = new HashMap<>();
 		files.forEach(
 				item -> filenames.put(item.getId().toString(), item.getFilename())

@@ -15,8 +15,11 @@ public class ProjectConverter {
 	public static ProjectFE convertToProjectFE(ProjectBE backend) {
 		ProjectFE frontend = new ProjectFE();
 		frontend.setName(backend.getName());
-		frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
-		frontend.setProjectID("/api/projects" + backend.getId());
+		if (backend.getPreviousProjectID() != null)
+			frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
+		else 
+			frontend.setPreviousProjectID("");
+		frontend.setProjectID("/api/projects/" + backend.getId());
 		frontend.setVersion(backend.getVersion());
 		frontend.setExecutionConfigs(backend.getExecutionConfigs().stream().map(be -> convertToExecutionConfigFE(be)).collect(Collectors.toSet()));
 		return frontend;
@@ -33,8 +36,11 @@ public class ProjectConverter {
 	public static ProjectWithFilesFE convertToProjectWithFilesFE(ProjectBE backend, HashMap<String, FileMetadataBE> filesMetadata, HashMap<String, String> filenames) {
 		ProjectWithFilesFE frontend = new ProjectWithFilesFE();
 		frontend.setName(backend.getName());
-		frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
-		frontend.setProjectID("/api/projects" + backend.getId());
+		if (backend.getPreviousProjectID() != null)
+			frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
+		else 
+			frontend.setPreviousProjectID("");
+		frontend.setProjectID("/api/projects/" + backend.getId());
 		frontend.setVersion(backend.getVersion());
 		frontend.setExecutionConfigs(backend.getExecutionConfigs().stream().map(be -> convertToExecutionConfigFE(be)).collect(Collectors.toSet()));
 		frontend.setFiles(backend.getFiles().stream()
