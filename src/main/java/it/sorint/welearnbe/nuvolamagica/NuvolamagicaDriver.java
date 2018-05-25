@@ -82,7 +82,7 @@ public class NuvolamagicaDriver {
 	
 	public Optional<byte[]> pullStdout(String processID) {
 		//Make the request
-		ResponseEntity<byte[]> pullStdoutResponse = restTemplate.getForEntity(processID+"/stdout", null, byte[].class);
+		ResponseEntity<byte[]> pullStdoutResponse = restTemplate.getForEntity(processID+"/stdout", byte[].class);
 		//Check if it has returned 200 OK
 		if (pullStdoutResponse.getStatusCode() != HttpStatus.OK) {
 			return Optional.empty();
@@ -96,7 +96,7 @@ public class NuvolamagicaDriver {
 	}
 	public Optional<byte[]> pullStderr(String processID) {
 		//Make the request
-		ResponseEntity<byte[]> pullStderrResponse = restTemplate.getForEntity(processID+"/stderr", null, byte[].class);
+		ResponseEntity<byte[]> pullStderrResponse = restTemplate.getForEntity(processID+"/stderr", byte[].class);
 		//Check if it has returned 200 OK
 		if (pullStderrResponse.getStatusCode() != HttpStatus.OK) {
 			return Optional.empty();
@@ -111,7 +111,7 @@ public class NuvolamagicaDriver {
 	
 	public Optional<ProcessStatusResponse> getStatus(String processID) {
 		//Make the request
-		ResponseEntity<ProcessStatusResponse> getStatusResponse = restTemplate.getForEntity(processID+"/status", null, ProcessStatusResponse.class);
+		ResponseEntity<ProcessStatusResponse> getStatusResponse = restTemplate.getForEntity(processID+"/status", ProcessStatusResponse.class);
 		//Check if it has returned 200 OK
 		if (getStatusResponse.getStatusCode() != HttpStatus.OK) {
 			return Optional.empty();
