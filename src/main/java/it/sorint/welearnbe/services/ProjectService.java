@@ -35,7 +35,7 @@ public class ProjectService {
 	public Optional<ExecutionConfigBE> getExecutionConfig(String username, UUID projectID, String executionConfig) {
 		Optional<ProjectBE> project = getProject(username, projectID);
 		if (project.isPresent()) {
-			return project.get().getExecutionConfigs().stream().filter(c -> c.getName() == executionConfig).findFirst();
+			return project.get().getExecutionConfigs().stream().filter(c -> c.getName().equals(executionConfig)).findFirst();
 		} else {
 			return Optional.empty();
 		}

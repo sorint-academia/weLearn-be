@@ -47,12 +47,14 @@ public class ProgressController {
 	}
 	
 	@GetMapping("/progresses/{student}")
-	public ResponseEntity<ProgressFE> getProgresses(Principal principal, @PathVariable("progressID") String student) {
+	public ResponseEntity<ProgressFE> getProgresses(Principal principal, @PathVariable("student") String student) {
 		//Return if the principal is the progress' student
+		System.out.println(student);
+		System.out.println(principal.getName());
 		if (student == "myself") {
 			student = principal.getName();
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<ProgressBE> be = progressService.getProgress(student, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressWithProgressCourseFE(be.get()));
@@ -74,7 +76,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<ProgressBE> be = progressService.getProgress(student2, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(be.get().getProjects().stream()
@@ -98,7 +100,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<ProgressProjectBE> be = progressService.getProgressProject(student2, projectID, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressProjectWithFilenamesFE(be.get(), "/api/progresses/"  + student, fileService.getFilenames()));
@@ -124,7 +126,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<byte[]> be = progressService.getFileOfProgressProject(student2, projectID, filename, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(be.get());
@@ -153,7 +155,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Boolean res = progressService.putFileOfProgressProject(student2, projectID, filename, content, principal.getName());
 			if (res)
 				return ResponseEntity.ok().build();

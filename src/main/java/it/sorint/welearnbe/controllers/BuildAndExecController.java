@@ -31,7 +31,7 @@ public class BuildAndExecController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<BuildResponse> out = buildAndExecService.build(principal.getName(), student2, projectID, executionConfig);
 			
 			if (out.isPresent())
@@ -54,7 +54,7 @@ public class BuildAndExecController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			boolean res = buildAndExecService.exec(principal.getName(), student2, projectID, executionConfig);
 			
 			if (res)
@@ -75,7 +75,7 @@ public class BuildAndExecController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<byte[]> out = buildAndExecService.pullStdout(principal.getName(), student2, projectID);
 			
 			if (out.isPresent())
@@ -96,7 +96,7 @@ public class BuildAndExecController {
 		} else {
 			student2 = student;
 		}
-		if (student == principal.getName()) {
+		if (student.equals(principal.getName())) {
 			Optional<byte[]> out = buildAndExecService.pullStderr(principal.getName(), student2, projectID);
 			
 			if (out.isPresent())

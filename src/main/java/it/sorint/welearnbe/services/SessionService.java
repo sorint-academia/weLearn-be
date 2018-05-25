@@ -36,7 +36,7 @@ public class SessionService {
     public List<SessionBE> getSessionsByStudentOrTeacherName(String username) {
         //Return all sessions where the user(name) is a teacher or a student
         return sessionRepository.findAll().stream().filter(s ->
-                s.getStudents().contains(username) || s.getTeacher() == username
+                s.getStudents().contains(username) || s.getTeacher().equals(username)
         ).collect(Collectors.toList());
     }
 
