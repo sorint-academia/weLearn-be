@@ -113,4 +113,12 @@ public class FileService {
 		}
 
 	}
+	
+	public Optional<String> getFilename(String id) {
+		GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+		if (f == null)
+			return Optional.empty();
+		else
+			return Optional.of(f.getFilename());
+	}
 }
