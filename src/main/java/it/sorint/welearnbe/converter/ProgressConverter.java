@@ -51,7 +51,7 @@ public class ProgressConverter {
 		return frontend;
 	}
 
-	public static ProgressWithProgressCourseFE convertToProgressCourseFE(ProgressBE backend) {
+	public static ProgressWithProgressCourseFE convertToProgressWithProgressCourseFE(ProgressBE backend) {
 		ProgressWithProgressCourseFE frontend = new ProgressWithProgressCourseFE();
 		frontend.setProgressID("/api/progresses/" + backend.getStudent());
 		frontend.setStudentID(backend.getStudent());
