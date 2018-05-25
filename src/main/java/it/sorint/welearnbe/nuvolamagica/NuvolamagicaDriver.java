@@ -88,7 +88,10 @@ public class NuvolamagicaDriver {
 			return Optional.empty();
 		} else {
 			//Return the WorkspaceID
-			return Optional.of(pullStdoutResponse.getBody());
+			if (pullStdoutResponse.hasBody())
+				return Optional.of(pullStdoutResponse.getBody());
+			else
+				return Optional.of(new byte[0]);
 		}
 	}
 	public Optional<byte[]> pullStderr(String processID) {
@@ -99,7 +102,10 @@ public class NuvolamagicaDriver {
 			return Optional.empty();
 		} else {
 			//Return the WorkspaceID
-			return Optional.of(pullStderrResponse.getBody());
+			if (pullStderrResponse.hasBody())
+				return Optional.of(pullStderrResponse.getBody());
+			else
+				return Optional.of(new byte[0]);
 		}
 	}
 	

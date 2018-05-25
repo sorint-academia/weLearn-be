@@ -6,6 +6,12 @@ public class ExecutionConfigBE {
 	private String mainFile;
 	
 	
+	public ExecutionConfigBE(String name, String lang, String mainFile) {
+		super();
+		this.name = name;
+		this.lang = lang;
+		this.mainFile = mainFile;
+	}
 	public String getName() {
 		return name;
 	}

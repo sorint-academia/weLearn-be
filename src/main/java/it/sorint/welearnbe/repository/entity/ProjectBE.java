@@ -14,6 +14,16 @@ public class ProjectBE {
 	List<String> files;
 	List<ExecutionConfigBE> executionConfigs;
 	
+	public ProjectBE(UUID id, String name, UUID previousProjectID, int version, List<String> files,
+			List<ExecutionConfigBE> executionConfigs) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.previousProjectID = previousProjectID;
+		this.version = version;
+		this.files = files;
+		this.executionConfigs = executionConfigs;
+	}
 	public UUID getId() {
 		return id;
 	}
