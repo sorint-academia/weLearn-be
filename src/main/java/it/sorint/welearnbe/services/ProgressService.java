@@ -38,7 +38,7 @@ public class ProgressService {
 		if (!progress.isPresent())
 			return Optional.empty();
 		
-		return progress.get().getProjects().stream().filter(pr -> pr.getId()==projectID).findFirst();
+		return progress.get().getProjects().stream().filter(pr -> pr.getId().equals(projectID)).findFirst();
 	}
 
 	public ProgressBE getOrCreateProgress(String student) {
