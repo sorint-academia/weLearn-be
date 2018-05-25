@@ -3,7 +3,6 @@ package it.sorint.welearnbe.repository.entity;
 import java.util.List;
 import java.util.UUID;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="projects")
@@ -12,7 +11,7 @@ public class ProjectBE {
 	private String name;
 	private UUID previousProjectID;
 	private int version;
-	List<ObjectId> files;
+	List<String> files;
 	List<ExecutionConfigBE> executionConfigs;
 	
 	public UUID getId() {
@@ -39,10 +38,10 @@ public class ProjectBE {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	public List<ObjectId> getFiles() {
+	public List<String> getFiles() {
 		return files;
 	}
-	public void setFiles(List<ObjectId> files) {
+	public void setFiles(List<String> files) {
 		this.files = files;
 	}
 	public List<ExecutionConfigBE> getExecutionConfigs() {
