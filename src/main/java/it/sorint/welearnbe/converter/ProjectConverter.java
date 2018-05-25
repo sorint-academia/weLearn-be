@@ -3,8 +3,6 @@ package it.sorint.welearnbe.converter;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-import org.bson.types.ObjectId;
-
 import it.sorint.welearnbe.controllers.entity.ExecutionConfigFE;
 import it.sorint.welearnbe.controllers.entity.FileFE;
 import it.sorint.welearnbe.controllers.entity.ProjectFE;
@@ -32,7 +30,7 @@ public class ProjectConverter {
 		return frontend;
 	}
 	
-	public static ProjectWithFilesFE convertToProjectWithFilesFE(ProjectBE backend, HashMap<ObjectId, FileMetadataBE> filesMetadata) {
+	public static ProjectWithFilesFE convertToProjectWithFilesFE(ProjectBE backend, HashMap<String, FileMetadataBE> filesMetadata) {
 		ProjectWithFilesFE frontend = new ProjectWithFilesFE();
 		frontend.setName(backend.getName());
 		frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
