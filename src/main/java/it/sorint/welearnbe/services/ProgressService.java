@@ -55,11 +55,11 @@ public class ProgressService {
 		}
 	}
 	
-	public Optional<ProgressProjectBE> getOrCreateProgressProject(String student, UUID projectID) {
+	public Optional<ProgressAndProgressProject> getOrCreateProgressProject(String student, UUID projectID) {
 		ProgressBE progress = getOrCreateProgress(student);
 		Optional<ProgressProjectBE> fromRepository = progress.getProjects().stream().filter(pr -> pr.getId() == projectID).findFirst();
 		if (fromRepository.isPresent()) {
-			return Optional.of(fromRepository.get());
+			return Optional.of(new ProgressAndProgressProject(progress, fromRepository.get()));
 		} else {
 			//Get the project
 			Optional<ProjectBE> project = projectService.getProject(projectID);
@@ -71,7 +71,7 @@ public class ProgressService {
 				newProgressProject.setFiles(fileService.cloneFiles(project.get().getFiles()));
 				progress.getProjects().add(newProgressProject);
 				progressRepository.save(progress);
-				return Optional.of(newProgressProject);
+				return Optional.of(new ProgressAndProgressProject(progress, newProgressProject));
 			} else {
 				return Optional.empty();
 			}
@@ -81,11 +81,24 @@ public class ProgressService {
 	public Optional<byte[]> getFileOfProgressProject(String student, UUID projectID, String filename, String name) {
 		//FIXME: security!
 		//Get the progress
-		Optional<ProgressProjectBE> progressProject = getOrCreateProgressProject(student, projectID);
+		Optional<ProgressAndProgressProject> progressProject = getOrCreateProgressProject(student, projectID);
 		if (progressProject.isPresent()) {
-			return fileService.loadFileByFilenameAndAnyOfIds(progressProject.get().getFiles(), filename);
+			return fileService.loadFileByFilenameAndAnyOfIds(progressProject.get().getProgressProject().getFiles(), filename);
 		} else {
 			return Optional.empty();
 		}
+	}
+	
+	public boolean putFileOfProgressProject(String student, UUID projectID, String filename, byte[] content, String username) {
+		Optional<ProgressAndProgressProject> progressProject = getOrCreateProgressProject(student, projectID);
+		if (!progressProject.isPresent())
+			return false;
+		Optional<OldNewFileId> newFile = fileService.saveFileByFilenameAndAnyOfIds(progressProject.get().getProgressProject().getFiles(), filename, content);
+		if (!newFile.isPresent()) 
+			return false;
+		progressProject.get().getProgressProject().getFiles().remove(newFile.get().getOldFile());
+		progressProject.get().getProgressProject().getFiles().add(newFile.get().getNewFile());
+		progressRepository.save(progressProject.get().getProgress());
+		return true;
 	}
 }

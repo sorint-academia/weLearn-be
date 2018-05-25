@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.mongodb.gridfs.GridFSDBFile;
 
 import it.sorint.welearnbe.repository.entity.FileMetadataBE;
+import sun.invoke.empty.Empty;
 
 @Service
 public class FileService {
@@ -90,5 +91,27 @@ public class FileService {
 		}).findFirst();
 		
 		
+	}
+
+	public Optional<OldNewFileId> saveFileByFilenameAndAnyOfIds(List<String> files, String filename, byte[] content) {
+		//Find the correct file
+		Optional<GridFSDBFile> oldFile = files.stream().filter(id -> {
+			GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			return f != null;
+		}).map(id -> {
+			GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			gridFsTemplate.delete(new Query(Criteria.where("_id").is(id)));
+			return f;
+		}).findFirst();
+		
+		if (oldFile.isPresent()) {
+			String newFile = simpleSave(filename, content, new FileMetadataBE (
+					(Boolean) oldFile.get().getMetaData().get("hidden"), 
+					(Boolean) oldFile.get().getMetaData().get("locked")));
+			return Optional.of(new OldNewFileId(oldFile.get().getId().toString(), newFile));			
+		} else {
+			return Optional.empty();
+		}
+
 	}
 }
