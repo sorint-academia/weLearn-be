@@ -17,7 +17,7 @@ public class SessionConverter {
 		frontend.setStudentsID(backend.getStudents());
 		frontend.setTeacherID(backend.getTeacher());
 		frontend.setFollowAsStudent(backend.getStudents().contains(username));
-		frontend.setFollowAsTeacher(backend.getTeacher() == username);
+		frontend.setFollowAsTeacher(backend.getTeacher().equals(username));
 		return frontend;
 	}
 
@@ -31,7 +31,7 @@ public class SessionConverter {
 		frontend.setStudentsID(backend.getStudents());
 		frontend.setTeacherID(backend.getTeacher());
 		frontend.setFollowAsStudent(backend.getStudents().contains(username));
-		frontend.setFollowAsTeacher(backend.getTeacher() == username);
+		frontend.setFollowAsTeacher(backend.getTeacher().equals(username));
 		frontend.setCourse(CourseConverter.convertToCourseWithUnitsFE(relativeCourseBE));
 		return frontend;
 	}
