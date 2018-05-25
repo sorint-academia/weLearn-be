@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +22,7 @@ public class BuildAndExecController {
 	@Autowired
 	private BuildAndExecService buildAndExecService;
 	
-	@PostMapping("/progresses/{student}/projects/{projectID}/build/{executionConfig}")
+	@GetMapping("/progresses/{student}/projects/{projectID}/build/{executionConfig}")
 	public ResponseEntity<BuildResponse> buildProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, @PathVariable("executionConfig") String executionConfig) {
 		final String student2;
 		if (student.equals("myself")) {
@@ -46,7 +45,7 @@ public class BuildAndExecController {
 		
 	}
 	
-	@PostMapping("/progresses/{student}/projects/{projectID}/exec/{executionConfig}")
+	@GetMapping("/progresses/{student}/projects/{projectID}/exec/{executionConfig}")
 	public ResponseEntity<Void> execProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, @PathVariable("executionConfig") String executionConfig) {
 		final String student2;
 		if (student.equals("myself")) {
