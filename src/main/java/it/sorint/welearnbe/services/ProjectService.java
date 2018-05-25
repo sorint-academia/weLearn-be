@@ -21,7 +21,12 @@ public class ProjectService {
 		return projectRepository.findAll();
 	}
 
-	public Optional<ProjectBE> getProject(String usenname, UUID projectID) {
+	public Optional<ProjectBE> getProject(String username, UUID projectID) {
+		//FIXME: limit visiblity
+		return Optional.ofNullable(projectRepository.findOne(projectID));
+	}
+	
+	public Optional<ProjectBE> getProject(UUID projectID) {
 		//FIXME: limit visiblity
 		return Optional.ofNullable(projectRepository.findOne(projectID));
 	}

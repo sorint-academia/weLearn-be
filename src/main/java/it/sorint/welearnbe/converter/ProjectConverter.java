@@ -30,7 +30,7 @@ public class ProjectConverter {
 		return frontend;
 	}
 	
-	public static ProjectWithFilesFE convertToProjectWithFilesFE(ProjectBE backend, HashMap<String, FileMetadataBE> filesMetadata) {
+	public static ProjectWithFilesFE convertToProjectWithFilesFE(ProjectBE backend, HashMap<String, FileMetadataBE> filesMetadata, HashMap<String, String> filenames) {
 		ProjectWithFilesFE frontend = new ProjectWithFilesFE();
 		frontend.setName(backend.getName());
 		frontend.setPreviousProjectID("/api/projects/" + backend.getPreviousProjectID());
@@ -38,14 +38,14 @@ public class ProjectConverter {
 		frontend.setVersion(backend.getVersion());
 		frontend.setExecutionConfigs(backend.getExecutionConfigs().stream().map(be -> convertToExecutionConfigFE(be)).collect(Collectors.toSet()));
 		frontend.setFiles(backend.getFiles().stream()
-				.map(id -> convertToFileFE(filesMetadata.get(id)))
+				.map(id -> convertToFileFE(filenames.get(id), filesMetadata.get(id)))
 				.collect(Collectors.toSet()));
 		return frontend;
 	}
 	
-	public static FileFE convertToFileFE(FileMetadataBE backend) {
+	public static FileFE convertToFileFE(String filename, FileMetadataBE backend) {
 		FileFE frontend = new FileFE();
-		frontend.setFilename(backend.getFilename());
+		frontend.setFilename(filename);
 		frontend.setHidden(backend.getHidden());
 		frontend.setLocked(backend.getLocked());
 		return frontend;

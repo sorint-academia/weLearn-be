@@ -107,7 +107,7 @@ public class ProgressController {
 	}
 	
 	@GetMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
-	public ResponseEntity<Byte[]> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
+	public ResponseEntity<byte[]> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
@@ -121,7 +121,7 @@ public class ProgressController {
 			student2 = student;
 		}
 		if (student == principal.getName()) {
-			Optional<Byte[]> be = progressService.getFileOfProgressProject(student2, projectID, filename, principal.getName());
+			Optional<byte[]> be = progressService.getFileOfProgressProject(student2, projectID, filename, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(be.get());
 			else

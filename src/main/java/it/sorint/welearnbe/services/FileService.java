@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -32,8 +33,6 @@ public class FileService {
 		HashMap<String, FileMetadataBE> metadatas = new HashMap<>();
 		files.forEach(
 				item -> metadatas.put(item.getId().toString(), new FileMetadataBE(
-							item.getId().toString(), 
-							item.getFilename(), 
 							(Boolean)item.getMetaData().get("hidden"), 
 							(Boolean)item.getMetaData().get("locked"))
 						)
@@ -56,5 +55,40 @@ public class FileService {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		file.writeTo(out);
 		return Optional.of(out.toByteArray());
+	}
+	
+	
+	public List<String> cloneFiles(List<String> files) {
+		return files.stream().map(id -> {
+			//Load the file data
+			GridFSDBFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			try {
+				return simpleSave(file.getFilename(), loadFileById(id).get(), new FileMetadataBE(
+						(Boolean) file.getMetaData().get("hidden"), 
+						(Boolean) file.getMetaData().get("locked")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "THE_STRANGE_ERROR";
+			}
+		}).collect(Collectors.toList());
+	}
+
+	public Optional<byte[]> loadFileByFilenameAndAnyOfIds(List<String> files, String filename) {
+		//Find the correct file
+		return files.stream().filter(id -> {
+			GridFSDBFile f = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+			return f != null;
+		}).map(id -> {
+			try {
+				return loadFileById(id).get();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "FAILED_TO_LOAD_FILE".getBytes();
+			}
+		}).findFirst();
+		
+		
 	}
 }
