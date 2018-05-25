@@ -32,8 +32,6 @@ public class FileService {
 		HashMap<String, FileMetadataBE> metadatas = new HashMap<>();
 		files.forEach(
 				item -> metadatas.put(item.getId().toString(), new FileMetadataBE(
-							item.getId().toString(), 
-							item.getFilename(), 
 							(Boolean)item.getMetaData().get("hidden"), 
 							(Boolean)item.getMetaData().get("locked"))
 						)

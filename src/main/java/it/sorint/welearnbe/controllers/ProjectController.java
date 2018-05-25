@@ -40,7 +40,7 @@ public class ProjectController {
 	public ResponseEntity<ProjectWithFilesFE> getProject(Principal principal, @PathVariable("projectID") UUID projectID) {
 		Optional<ProjectBE> backend = projectService.getProject(principal.getName(), projectID);
 		if (backend.isPresent())
-			return ResponseEntity.ok(ProjectConverter.convertToProjectWithFilesFE(backend.get(), fileService.getFileMetadatas()));
+			return ResponseEntity.ok(ProjectConverter.convertToProjectWithFilesFE(backend.get(), fileService.getFileMetadatas(), fileService.getFilenames()));
 		else
 			return ResponseEntity.notFound().build();
 	}
