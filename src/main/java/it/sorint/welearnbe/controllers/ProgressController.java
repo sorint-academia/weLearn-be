@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import it.sorint.welearnbe.controllers.entity.ProgressProjectWithFilenamesFE;
 import it.sorint.welearnbe.converter.ProgressConverter;
 import it.sorint.welearnbe.repository.entity.ProgressBE;
 import it.sorint.welearnbe.repository.entity.ProgressProjectBE;
+import it.sorint.welearnbe.services.FileService;
 import it.sorint.welearnbe.services.ProgressService;
 
 @RestController
@@ -31,6 +33,8 @@ public class ProgressController {
 	
 	@Autowired
 	private ProgressService progressService;
+	@Autowired
+	private FileService fileService;
 	
 	@GetMapping("/progresses")
 	public List<ProgressFE> getProgresses(Principal principal) {
@@ -46,7 +50,7 @@ public class ProgressController {
 			student = principal.getName();
 		}
 		if (student == principal.getName()) {
-			Optional<ProgressBE> be = progressService.getProgress(student);
+			Optional<ProgressBE> be = progressService.getProgress(student, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressWithProgressCourseFE(be.get()));
 			else
@@ -82,29 +86,47 @@ public class ProgressController {
 		}
 	}
 	
-	@GetMapping("/progresses/{progressID}/projects/{projectID}")
-	public ResponseEntity<ProgressProjectWithFilenamesFE> getProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	@GetMapping("/progresses/{student}/projects/{projectID}")
+	public ResponseEntity<ProgressProjectWithFilenamesFE> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID) {
 		//Return if the principal is the progress' student
-		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
-			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);	
+		final String student2;
+		if (student == "myself") {
+			student2 = principal.getName();
+		} else {
+			student2 = student;
+		}
+		if (student == principal.getName()) {
+			Optional<ProgressProjectBE> be = progressService.getProgressProject(student2, projectID, principal.getName());
+			if (be.isPresent())
+				return ResponseEntity.ok(ProgressConverter.convertToProgressProjectWithFilenamesFE(be.get(), "/api/progresses/"  + student, fileService.getFilenames()));
+			else
+				return ResponseEntity.notFound().build();
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 	
-	@GetMapping("/progresses/{progressID}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
-	public ResponseEntity<Byte[]> getProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
+	@GetMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
+	public ResponseEntity<Byte[]> getProgressProject(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request) {
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );
 		//I don't know why but the filename start with files/.
 		filename = filename.replaceFirst("files/", "");
 		//Return if the principal is the progress' student
-		if (progressService.isStudentOfProgress(principal.getName(), progressID)) {
-			//TODO: return the correct value! not null
-			return ResponseEntity.ok(null);	
+		final String student2;
+		if (student == "myself") {
+			student2 = principal.getName();
+		} else {
+			student2 = student;
+		}
+		if (student == principal.getName()) {
+			Optional<Byte[]> be = progressService.getFileOfProgressProject(student2, projectID, filename, principal.getName());
+			if (be.isPresent())
+				return ResponseEntity.ok(be.get());
+			else
+				return ResponseEntity.notFound().build();
 		} else {
 			//Return 403 FORBIDDEN
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
