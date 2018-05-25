@@ -20,28 +20,28 @@ import it.sorint.welearnbe.controllers.entity.BuildResultFE;
 @RequestMapping("/api")
 public class BuildAndExecController {
 
-	@PostMapping("/progresses/{progressID}/projects/{projectID}/build")
-	public ResponseEntity<BuildResultFE> buildProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	@PostMapping("/progresses/{student}/projects/{projectID}/build")
+	public ResponseEntity<BuildResultFE> buildProgressProject(Principal principal, @PathVariable("student") UUID student, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 	
-	@PostMapping("/progresses/{progressID}/projects/{projectID}/exec")
-	public ResponseEntity<Void> execProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	@PostMapping("/progresses/{student}/projects/{projectID}/exec")
+	public ResponseEntity<Void> execProgressProject(Principal principal, @PathVariable("student") UUID student, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
-	@GetMapping("/progresses/{progressID}/projects/{projectID}/stdout")
-	public ResponseEntity<Byte[]> stdoutProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	@GetMapping("/progresses/{student}/projects/{projectID}/stdout")
+	public ResponseEntity<byte[]> stdoutProgressProject(Principal principal, @PathVariable("student") UUID student, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
-	@GetMapping("/progresses/{progressID}/projects/{projectID}/stderr")
-	public ResponseEntity<Byte[]> stderrProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID) {
+	@GetMapping("/progresses/{student}/projects/{projectID}/stderr")
+	public ResponseEntity<byte[]> stderrProgressProject(Principal principal, @PathVariable("student") UUID student, @PathVariable("projectID") UUID projectID) {
 		return null;		
 	}
 
-	@PutMapping("/progresses/{progressID}/projects/{projectID}/stdin")
-	public ResponseEntity<Byte[]> writeStdinProgressProject(Principal principal, @PathVariable("progressID") UUID progressID, @PathVariable("projectID") UUID projectID, InputStream stream) throws IOException {
+	@PutMapping("/progresses/{student}/projects/{projectID}/stdin")
+	public ResponseEntity<byte[]> writeStdinProgressProject(Principal principal, @PathVariable("student") UUID student, @PathVariable("projectID") UUID projectID, InputStream stream) throws IOException {
 		//Get stream content
 		byte[] content = IOUtils.toByteArray(stream);
 		
