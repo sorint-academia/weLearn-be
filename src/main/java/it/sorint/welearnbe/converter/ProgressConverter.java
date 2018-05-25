@@ -3,7 +3,6 @@ package it.sorint.welearnbe.converter;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-import org.bson.types.ObjectId;
 
 import it.sorint.welearnbe.controllers.entity.ProgressCourseFE;
 import it.sorint.welearnbe.controllers.entity.ProgressFE;
@@ -51,7 +50,7 @@ public class ProgressConverter {
 		return frontend;
 	}
 
-	public static ProgressWithProgressCourseFE convertToProgressCourseFE(ProgressBE backend) {
+	public static ProgressWithProgressCourseFE convertToProgressWithProgressCourseFE(ProgressBE backend) {
 		ProgressWithProgressCourseFE frontend = new ProgressWithProgressCourseFE();
 		frontend.setProgressID("/api/progresses/" + backend.getStudent());
 		frontend.setStudentID(backend.getStudent());
@@ -67,7 +66,7 @@ public class ProgressConverter {
 		return frontend;
 	}
 	
-	public static ProgressProjectWithFilenamesFE convertToProgressProjectWithFilenamesFE(ProgressProjectBE backend, String progressID, HashMap<ObjectId, String> files) {
+	public static ProgressProjectWithFilenamesFE convertToProgressProjectWithFilenamesFE(ProgressProjectBE backend, String progressID, HashMap<String, String> files) {
 		ProgressProjectWithFilenamesFE frontend = new ProgressProjectWithFilenamesFE();
 		frontend.setProjectID("/api/projects/" + backend.getId());
 		frontend.setProgressProjectID(progressID + "/projects/" + backend.getId());

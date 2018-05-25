@@ -1,18 +1,26 @@
 package it.sorint.welearnbe.repository.entity;
 
-import org.bson.types.ObjectId;
 
 public class FileMetadataBE {
-	private ObjectId id;
+	private String id;
 	private String filename;
 	private Boolean hidden;
 	private Boolean locked;
 	
-	
-	public ObjectId getId() {
+	public FileMetadataBE(String id, String filename, Boolean hidden, Boolean locked) {
+		super();
+		this.id = id;
+		this.filename = filename;
+		this.hidden = hidden;
+		this.locked = locked;
+	}
+	public FileMetadataBE() {
+		super();
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(ObjectId id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Boolean getHidden() {
