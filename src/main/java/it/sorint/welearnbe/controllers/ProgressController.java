@@ -125,7 +125,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student.equals(principal.getName())) {
+		if (student2.equals(principal.getName())) {
 			Optional<byte[]> be = progressService.getFileOfProgressProject(student2, projectID, filename, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(be.get());
