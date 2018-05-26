@@ -99,7 +99,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student.equals(principal.getName())) {
+		if (student2.equals(principal.getName())) {
 			Optional<ProgressProjectBE> be = progressService.getProgressProject(student2, projectID, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressProjectWithFilenamesFE(be.get(), "/api/progresses/"  + student, fileService.getFilenames()));
@@ -154,7 +154,7 @@ public class ProgressController {
 		} else {
 			student2 = student;
 		}
-		if (student.equals(principal.getName())) {
+		if (student2.equals(principal.getName())) {
 			Boolean res = progressService.putFileOfProgressProject(student2, projectID, filename, content, principal.getName());
 			if (res)
 				return ResponseEntity.ok().build();
