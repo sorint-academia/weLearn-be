@@ -53,7 +53,6 @@ public class ProgressController {
 			student = principal.getName();
 		}
 		if (student.equals(principal.getName())) {
-			System.out.println("ciao");
 			Optional<ProgressBE> be = progressService.getProgress(student, principal.getName());
 			if (be.isPresent())
 				return ResponseEntity.ok(ProgressConverter.convertToProgressWithProgressCourseFE(be.get()));
@@ -139,6 +138,8 @@ public class ProgressController {
 	
 	@PutMapping("/progresses/{student}/projects/{projectID}/files/**") //I know, the ** and HttpServletRequest suck
 	public ResponseEntity<Void> putProgressProjectFile(Principal principal, @PathVariable("student") String student, @PathVariable("projectID") UUID projectID, HttpServletRequest request, InputStream stream) throws IOException {
+		System.out.println("QUI");
+		System.out.println(principal);
 		//Get file name
 		String filename = new AntPathMatcher()
 	            .extractPathWithinPattern( "/progresses/{progressID}/projects/{projectID}/files/**", request.getRequestURI() );

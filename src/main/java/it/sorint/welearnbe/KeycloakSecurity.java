@@ -58,5 +58,6 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
               .antMatchers(HttpMethod.GET, "/api/projects/**").authenticated()
               .antMatchers(HttpMethod.GET, "/api/progresses/**").authenticated()
               .anyRequest().permitAll();
+      http.csrf().disable();
    }
 }
