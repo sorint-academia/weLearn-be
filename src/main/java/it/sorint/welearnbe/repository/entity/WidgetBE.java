@@ -18,7 +18,7 @@ public class WidgetBE {
 	public WidgetBE() {
 		super();
 	}
-	public WidgetBE(UUID id, String type, String text, UUID ref, UUID projectID) {
+	public WidgetBE(UUID id, String type, String text, UUID projectID, UUID ref) {
 		super();
 		this.id = id;
 		this.type = type;
